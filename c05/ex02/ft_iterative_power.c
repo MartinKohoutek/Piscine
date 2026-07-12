@@ -1,0 +1,14 @@
+int ft_iterative_power(int nb, int power)
+{
+	int res;
+
+	if (power < 0)
+		return (0);
+	res = 1;
+	while (power)
+	{
+		res *= nb;
+		power--;
+	}
+	return (res);
+}
