@@ -52,7 +52,6 @@ int	main(int argc, char **argv)
 		}
 		i++;
 	}
-
 	ft_print_argv(argv);
 	return (0);
 }

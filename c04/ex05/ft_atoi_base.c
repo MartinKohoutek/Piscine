@@ -1,8 +1,6 @@
-#include <unistd.h>
-
 int	ft_strlen(char *str)
 {
-	char *start;
+	char	*start;
 
 	start = str;
 	while (*str)
@@ -49,30 +47,38 @@ int	ft_get_value(char c, char *base)
 	return (-1);
 }
 
+int	ft_convert(char *str, char *base, int base_len)
+{
+	int	result;
+	int	value;
+
+	result = 0;
+	value = ft_get_value(*str, base);
+	while (value != -1)
+	{
+		result = result * base_len + value;
+		str++;
+		value = ft_get_value(*str, base);
+	}
+	return (result);
+}
+
 int	ft_atoi_base(char *str, char *base)
 {
 	int	base_len;
 	int	sign;
-	int	result;
-	int	value;
 
 	if (!ft_check_base(base))
 		return (0);
 	base_len = ft_strlen(base);
 	sign = 1;
-	result = 0;
 	while (*str == ' ' || (*str >= 9 && *str <= 13))
 		str++;
 	while (*str == '+' || *str == '-')
 	{
 		if (*str == '-')
-			sign = -1;
+			sign = -sign;
 		str++;
 	}
-	while ((value = ft_get_value(*str, base)) != -1)
-	{
-		result = result * base_len + value;
-		str++;
-	}
-	return (result * sign);
+	return (ft_convert(str, base, base_len) * sign);
 }

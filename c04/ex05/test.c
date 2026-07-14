@@ -71,9 +71,13 @@ int main(void)
 		42,
 		ft_atoi_base("++++42", "0123456789"));
 
-	assert_int("multiple minus",
-		-42,
+	assert_int("two minus",
+		42,
 		ft_atoi_base("--42", "0123456789"));
+
+	assert_int("three minus",
+		-42,
+		ft_atoi_base("---42", "0123456789"));
 
 	assert_int("mixed signs",
 		-42,

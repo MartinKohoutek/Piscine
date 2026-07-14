@@ -8,7 +8,6 @@ int	main(int argc, char **argv)
 	start = argv;
 	while (*argv)
 		argv++;
-
 	while (argv > start + 1)
 	{
 		argv--;
