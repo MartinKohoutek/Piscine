@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: martin <martin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/18 09:00:16 by martin            #+#    #+#             */
+/*   Updated: 2026/07/18 09:06:43 by martin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -14,22 +26,10 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-char	*ft_strjoin(int size, char **strs, char *sep)
+int	ft_getlen(int size, char **strs, char *sep)
 {
-	char	*result;
-	char	*start;
-	char	*src;
-	int		total;
-	int		i;
-
-	if (size == 0)
-	{
-		result = malloc(1);
-		if (!result)
-			return (NULL);
-		*result = '\0';
-		return (result);
-	}
+	int	total;
+	int	i;
 
 	total = 0;
 	i = 0;
@@ -38,44 +38,49 @@ char	*ft_strjoin(int size, char **strs, char *sep)
 		total += ft_strlen(strs[i]);
 		i++;
 	}
-	total += ft_strlen(sep) * (size - 1);
+	return (total + ft_strlen(sep) * (size - 1));
+}
 
-	result = malloc(total + 1);
+void	ft_copy(char **dst, char *src)
+{
+	while (*src)
+	{
+		**dst = *src;
+		(*dst)++;
+		src++;
+	}
+}
+
+char	*ft_strjoin(int size, char **strs, char *sep)
+{
+	char	*result;
+	char	*start;
+	int		i;
+
+	if (size == 0)
+	{
+		result = malloc(1);
+		if (result)
+			*result = '\0';
+		return (result);
+	}
+	result = malloc(ft_getlen(size, strs, sep) + 1);
 	if (!result)
 		return (NULL);
-
 	start = result;
-
 	i = 0;
 	while (i < size)
 	{
-		src = strs[i];
-		while (*src)
-		{
-			*result = *src;
-			result++;
-			src++;
-		}
-
+		ft_copy(&result, strs[i]);
 		if (i < size - 1)
-		{
-			src = sep;
-			while (*src)
-			{
-				*result = *src;
-				result++;
-				src++;
-			}
-		}
+			ft_copy(&result, sep);
 		i++;
 	}
-
 	*result = '\0';
-
 	return (start);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char	*strs[] = {"Hello", "42", "Prague"};
 	char	*result;
@@ -89,4 +94,4 @@ int	main(void)
 	}
 
 	return (0);
-}
+} */
